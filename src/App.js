@@ -1,7 +1,16 @@
+import { useEffect } from "react";
+import Search from "./Components/Search";
+
 function App() {
   return (
-    <div className="App">
-      <h2>hello</h2>
+    <div className="app">
+      <div className="app__title">
+        <div className="section">
+          <h2>Search Vaccination Center</h2>
+        </div>
+      </div>
+
+      <Search />
     </div>
   );
 }
