@@ -40,56 +40,64 @@ function Search() {
           <h3 className="error__text">{error}</h3>
         </div>
       )}
-      <section className="search section">
-        <div className="search__date">
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            dateFormat="dd/MM/yyyy"
-            minDate={new Date()}
-          />
-        </div>
-        <div className="search__location">
-          <article className="search__state">
-            <h2>Search State</h2>
-            <select name="state" onChange={(e) => setStateCode(e.target.value)}>
-              <option value="Select State" selected disabled hidden>
-                Select State
-              </option>
-              {data &&
-                data.states.map((state) => {
-                  return (
-                    <option value={state.state_id} key={state.state_id}>
-                      {state.state_name}
-                    </option>
-                  );
-                })}
-            </select>
-          </article>
-          <article className="search__district">
-            <h2>Search District</h2>
-            <select
-              name="district"
-              onChange={(e) => setDistrictCode(e.target.value)}
-            >
-              <option value="Select District" selected disabled hidden>
-                Select District
-              </option>
-              {districts &&
-                districts.districts.map((district) => {
-                  return (
-                    <option
-                      value={district.district_id}
-                      key={district.district_id}
-                    >
-                      {district.district_name}
-                    </option>
-                  );
-                })}
-            </select>
-          </article>
-        </div>
-      </section>
+
+      {!error && (
+        <section className="search section">
+          <div className="search__date">
+            <h2 className="search__title">Select Date</h2>
+            <DatePicker
+              className="datepicker"
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="dd/MM/yyyy"
+              minDate={new Date()}
+            />
+          </div>
+          <div className="search__location">
+            <article className="search__state">
+              <h2 className="search__title">Search State</h2>
+              <select
+                name="state"
+                onChange={(e) => setStateCode(e.target.value)}
+              >
+                <option value="Select State" selected disabled hidden>
+                  Select State
+                </option>
+                {data &&
+                  data.states.map((state) => {
+                    return (
+                      <option value={state.state_id} key={state.state_id}>
+                        {state.state_name}
+                      </option>
+                    );
+                  })}
+              </select>
+            </article>
+            <article className="search__district">
+              <h2 className="search__title">Search District</h2>
+              <select
+                name="district"
+                onChange={(e) => setDistrictCode(e.target.value)}
+              >
+                <option value="Select District" selected disabled hidden>
+                  Select District
+                </option>
+                {districts &&
+                  districts.districts.map((district) => {
+                    return (
+                      <option
+                        value={district.district_id}
+                        key={district.district_id}
+                      >
+                        {district.district_name}
+                      </option>
+                    );
+                  })}
+              </select>
+            </article>
+          </div>
+        </section>
+      )}
       {districtCode && <Center district_code={districtCode} date={startDate} />}
     </React.Fragment>
   );
