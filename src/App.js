@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Search from "./Components/Search";
 
 function App() {
@@ -9,7 +9,6 @@ function App() {
           <h2>Search Vaccination Center</h2>
         </div>
       </div>
-
       <Search />
     </div>
   );
