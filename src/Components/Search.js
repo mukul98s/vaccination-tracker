@@ -4,11 +4,15 @@ import useFetch from "../utils/useFetch";
 
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import "react-datepicker/dist/react-datepicker.css";
+import Center from "./Center";
 
 function Search() {
-  const [stateCode, setStateCode] = useState(0);
+  const [stateCode, setStateCode] = useState(null);
   const [districts, setDistricts] = useState();
-  const states = useFetch(
+  const [startDate, setStartDate] = useState(new Date());
+  const [districtCode, setDistrictCode] = useState(null);
+
+  const { data, isLoading, error } = useFetch(
     "https://cdn-api.co-vin.in/api/v2/admin/location/states"
   );
 
@@ -29,58 +33,65 @@ function Search() {
     fetchData();
   }, [stateCode]);
 
-  const getDistricts = (e) => {
-    setStateCode(e.target.value);
-  };
-
-  console.log(districts);
-
-  const [startDate, setStartDate] = useState(new Date());
   return (
-    <div className="search">
-      <div className="search__date">
-        <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          dateFormat="dd/MM/yyyy"
-        />
-      </div>
-      <div className="search__location">
-        <div className="search__state">
-          <h2>Search State</h2>
-          <select name="state" onChange={getDistricts}>
-            {states &&
-              states.states.map((state) => {
-                return (
-                  <option
-                    code={state.state_id}
-                    value={state.state_id}
-                    key={state.state_id}
-                  >
-                    {state.state_name}
-                  </option>
-                );
-              })}
-          </select>
+    <React.Fragment>
+      {error && (
+        <div className="error">
+          <h3 className="error__text">{error}</h3>
         </div>
-        <div className="search__district">
-          <h2>Search District</h2>
-          <select name="district">
-            {districts &&
-              districts.districts.map((district) => {
-                return (
-                  <option
-                    value={district.district_id}
-                    key={district.district_id}
-                  >
-                    {district.district_name}
-                  </option>
-                );
-              })}
-          </select>
+      )}
+      <section className="search section">
+        <div className="search__date">
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            dateFormat="dd/MM/yyyy"
+            minDate={new Date()}
+          />
         </div>
-      </div>
-    </div>
+        <div className="search__location">
+          <article className="search__state">
+            <h2>Search State</h2>
+            <select name="state" onChange={(e) => setStateCode(e.target.value)}>
+              <option value="Select State" selected disabled hidden>
+                Select State
+              </option>
+              {data &&
+                data.states.map((state) => {
+                  return (
+                    <option value={state.state_id} key={state.state_id}>
+                      {state.state_name}
+                    </option>
+                  );
+                })}
+            </select>
+          </article>
+          <article className="search__district">
+            <h2>Search District</h2>
+            <select
+              name="district"
+              onChange={(e) => setDistrictCode(e.target.value)}
+            >
+              <option value="Select District" selected disabled hidden>
+                Select District
+              </option>
+              {districts &&
+                districts.districts.map((district) => {
+                  return (
+                    <option
+                      value={district.district_id}
+                      key={district.district_id}
+                    >
+                      {district.district_name}
+                    </option>
+                  );
+                })}
+            </select>
+          </article>
+        </div>
+      </section>
+      {districtCode && <Center district_code={districtCode} date={startDate} />}
+    </React.Fragment>
   );
 }
 
