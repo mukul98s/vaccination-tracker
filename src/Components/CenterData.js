@@ -24,8 +24,7 @@ function CenterData({ address, name, sessions, pincode, fee, id }) {
                   Available Capacity: <span>{session.available_capacity}</span>
                 </h4>
                 <h4>
-                  Date:{" "}
-                  <span>{moment(session.date).format("MMMM Do YYYY")}</span>
+                  Date: <span>{session.date}</span>
                 </h4>
                 <h4>
                   Vaccine: <span>{session.vaccine}</span>
