@@ -9,6 +9,10 @@ function Center({ district_code, date }) {
 
   const { data, isLoading, error } = useFetch(url);
 
+  if (data) {
+    console.log(data.centers.length);
+  }
+
   return (
     <section className="center section">
       <div className="center__title">
@@ -31,6 +35,16 @@ function Center({ district_code, date }) {
       {error && (
         <div className="error">
           <h3 className="error__text">{error}</h3>
+        </div>
+      )}
+
+      {data && (
+        <div className="error">
+          {data.centers.length === 0 && (
+            <h3 className="error__text">
+              Please Search With a Different Date!!!
+            </h3>
+          )}
         </div>
       )}
 
