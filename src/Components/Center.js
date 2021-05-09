@@ -37,16 +37,7 @@ function Center({ district_code, date }) {
       {data && (
         <div className="center__data">
           {data.centers.map((center) => {
-            return (
-              <CenterData
-                key={center.center_id}
-                address={center.address}
-                name={center.name}
-                sessions={center.sessions}
-                pincode={center.pincode}
-                fee={center.fee_type}
-              />
-            );
+            return <CenterData center={center} />;
           })}
         </div>
       )}
