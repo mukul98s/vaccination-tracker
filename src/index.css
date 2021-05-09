@@ -230,6 +230,8 @@ App.js styles
   cursor: pointer;
   outline: none;
   position: relative;
+  width: 200px;
+  border-radius: 5px;
 }
 
 /* Center.js */
