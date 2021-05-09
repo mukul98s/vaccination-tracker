@@ -260,7 +260,7 @@ App.js styles
   transition: all ease 2s;
 }
 
-.show {
+.centerData__session.show {
   transition: all ease 2s;
   display: block;
   height: auto;
@@ -322,4 +322,35 @@ App.js styles
 
 .red {
   color: var(--clr-red-dark);
+}
+
+@media screen and (min-width: 720px) {
+  .app__title h2 {
+    font-size: 2.5rem;
+    font-weight: 400;
+  }
+  .search {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .search__location {
+    margin-top: 0;
+  }
+
+  .center__title h2 {
+    font-size: 2rem;
+    font-weight: 400;
+  }
+  .centerData {
+    padding: 30px 50px;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  .center__data {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+  }
 }
