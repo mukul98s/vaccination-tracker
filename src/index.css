@@ -219,7 +219,8 @@ App.js styles
   margin-top: 2rem;
 }
 
-.search__location select {
+.search__location select,
+.center__filter select {
   border: none;
   padding: 10px;
   text-align: center;
@@ -251,6 +252,9 @@ App.js styles
 }
 
 /* CenterData.js */
+.center__filter {
+  text-align: center;
+}
 .centerData {
   background: white;
   margin: 10px;

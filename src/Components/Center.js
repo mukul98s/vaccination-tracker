@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import useFetch from "../utils/useFetch";
 import CenterData from "./CenterData";
 
 function Center({ district_code, date }) {
+  const [code, setCode] = useState(0);
   const formattedDate = moment(date).format("DD-MM-YYYY");
   const url = `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${district_code}&date=${formattedDate}`;
 
   const { data, isLoading, error } = useFetch(url);
+  const pincodes = [];
+  let filteredData = [];
 
   if (data) {
-    console.log(data.centers.length);
+    data.centers.map((center) => pincodes.push(center.pincode));
+    if (code)
+      filteredData = [
+        ...data.centers.filter((c) => c.pincode === parseInt(code)),
+      ];
+    else filteredData = [...data.centers];
   }
+
+  const filteredCodes = [...new Set(pincodes)];
+
+  console.log(filteredData);
 
   return (
     <section className="center section">
@@ -49,11 +61,23 @@ function Center({ district_code, date }) {
       )}
 
       {data && (
-        <div className="center__data">
-          {data.centers.map((center) => {
-            return <CenterData center={center} />;
-          })}
-        </div>
+        <React.Fragment>
+          <div className="center__filter">
+            <select name="filter" onChange={(e) => setCode(e.target.value)}>
+              <option value="Filter by Pincode" selected disabled hidden>
+                Filter By Pincode
+              </option>
+              {filteredCodes.map((code, index) => {
+                return <option key={index}>{code}</option>;
+              })}
+            </select>
+          </div>
+          <div className="center__data">
+            {filteredData.map((center, index) => {
+              return <CenterData center={center} key={index} />;
+            })}
+          </div>
+        </React.Fragment>
       )}
     </section>
   );
